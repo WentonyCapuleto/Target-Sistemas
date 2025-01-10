@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faturamento Mensal por Estado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            text-align: center;
+            padding: 8px;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Percentual de Representação por Estado</h1>
+    <button onclick="calcularPercentual()">Calcular Percentuais</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Estado</th>
+                <th>Faturamento (R$)</th>
+                <th>Percentual (%)</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-resultado">
+        </tbody>
+    </table>
+
+    <script>
+        const faturamento = {
+            "SP": 67836.43,
+            "RJ": 36678.66,
+            "MG": 29229.88,
+            "ES": 27165.48,
+            "Outros": 19849.53
+        };
+
+        function calcularPercentual() {
+            const totalFaturamento = Object.values(faturamento).reduce((acc, valor) => acc + valor, 0);
+
+            const tabelaResultado = document.getElementById("tabela-resultado");
+            tabelaResultado.innerHTML = ""; 
+            for (const [estado, valor] of Object.entries(faturamento)) {
+                const percentual = (valor / totalFaturamento) * 100;
+
+                const linha = `
+                    <tr>
+                        <td>${estado}</td>
+                        <td>R$ ${valor.toFixed(2)}</td>
+                        <td>${percentual.toFixed(2)}%</td>
+                    </tr>
+                `;
+                tabelaResultado.innerHTML += linha;
+            }
+        }
+    </script>
+</body>
+</html>
